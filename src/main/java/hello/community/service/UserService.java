@@ -1,6 +1,7 @@
 package hello.community.service;
 
 import hello.community.domain.User.User;
+import hello.community.dto.SignupDto;
 import hello.community.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void save(User user) {
+    public void save(SignupDto signupDto) {
+        User user = new User(signupDto.getLoginId(), signupDto.getPassword());
         userRepository.save(user);
     }
 }

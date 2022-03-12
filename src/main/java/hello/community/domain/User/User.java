@@ -3,6 +3,9 @@ package hello.community.domain.User;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @Entity
@@ -11,9 +14,15 @@ public class User {
     @Id @GeneratedValue
     private Long id;
 
-    @Column(nullable = false, length = 15, unique = true)
     private String loginId;
 
-    @Column(nullable = false, length = 15)
     private String password;
+
+    public User(String loginId, String password) {
+        this.loginId = loginId;
+        this.password = password;
+    }
+
+    public User() {
+    }
 }

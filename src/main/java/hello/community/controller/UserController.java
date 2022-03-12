@@ -1,7 +1,6 @@
 package hello.community.controller;
 
-import hello.community.domain.User.User;
-import hello.community.repository.UserRepository;
+import hello.community.dto.SignupDto;
 import hello.community.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,22 +18,19 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/add")
-    public String addForm(@ModelAttribute("user") User user) {
-        return "users/addUserForm";
+    @GetMapping("/signup")
+    public String signupForm(@ModelAttribute("signupDto") SignupDto signupDto) {
+        return "users/SignupForm";
     }
 
-    @PostMapping("/add")
-    public String save(@Validated @ModelAttribute("user") User user, BindingResult bindingResult) {
-
-        System.out.println("user.getLoginId() = " + user.getLoginId());
-        System.out.println("user.getPassword() = " + user.getPassword());
+    @PostMapping("/signup")
+    public String save(@Validated @ModelAttribute("signupDto") SignupDto signupDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "users/addUserForm";
+            return "users/SignupForm";
         }
 
-        userService.save(user);
-        return "redirect:/home";
+        userService.save(signupDto);
+        return "redirect:/";
     }
 }
