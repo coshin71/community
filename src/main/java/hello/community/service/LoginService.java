@@ -13,7 +13,7 @@ public class LoginService {
 
     public User login(String loginId, String password) {
         return userRepository.findByLoginId(loginId)
-                .filter(m -> m.getPassword().equals(password))
+                .filter(u -> u.getPassword().equals(password))
                 .orElse(null);
     }
 

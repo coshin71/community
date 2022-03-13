@@ -30,6 +30,11 @@ public class UserController {
             return "users/SignupForm";
         }
 
+        if (userService.isDuplicatedLoginId(signupDto.getLoginId())) {
+            bindingResult.reject("loginIdDuplicate", "아이디가 중복입니다.");
+            return "users/SignupForm";
+        }
+
         userService.save(signupDto);
         return "redirect:/";
     }
