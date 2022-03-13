@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 public class User {
 
     @Id @GeneratedValue
+    @Column(name = "USER_ID")
     private Long id;
 
     private String loginId;

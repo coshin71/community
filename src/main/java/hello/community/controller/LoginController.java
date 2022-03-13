@@ -1,7 +1,7 @@
 package hello.community.controller;
 
 import hello.community.domain.User.User;
-import hello.community.dto.LoginDto;
+import hello.community.dto.UserLoginDto;
 import hello.community.service.LoginService;
 import hello.community.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -23,19 +23,19 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginDto") LoginDto loginDto) {
+    public String loginForm(@ModelAttribute("loginDto") UserLoginDto userLoginDto) {
         return "login/loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@Validated @ModelAttribute("loginDto") LoginDto loginDto,
+    public String login(@Validated @ModelAttribute("loginDto") UserLoginDto userLoginDto,
                         BindingResult bindingResult, @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "login/loginForm";
         }
 
-        User loginUser = loginService.login(loginDto.getLoginId(), loginDto.getPassword());
+        User loginUser = loginService.login(userLoginDto.getLoginId(), userLoginDto.getPassword());
 
         if (loginUser == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 올바르지 않습니다.");
