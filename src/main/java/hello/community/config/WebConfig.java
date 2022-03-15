@@ -1,4 +1,4 @@
-package hello.community.Config;
+package hello.community.config;
 
 import hello.community.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;

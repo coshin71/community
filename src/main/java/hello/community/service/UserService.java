@@ -16,7 +16,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void save(UserSignupDto userSignupDto) {
+    public void signup(UserSignupDto userSignupDto) {
         User user = new User(userSignupDto.getLoginId(), userSignupDto.getPassword());
         userRepository.save(user);
     }

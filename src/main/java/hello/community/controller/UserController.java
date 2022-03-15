@@ -24,8 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String save(@Validated @ModelAttribute("signupDto") UserSignupDto userSignupDto, BindingResult bindingResult) {
-
+    public String signup(@Validated @ModelAttribute("signupDto") UserSignupDto userSignupDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "users/signupForm";
         }
@@ -35,7 +34,7 @@ public class UserController {
             return "users/signupForm";
         }
 
-        userService.save(userSignupDto);
+        userService.signup(userSignupDto);
         return "redirect:/";
     }
 }
