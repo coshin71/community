@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,13 +25,13 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String write(@Validated @ModelAttribute("boardDto")BoardWriteDto boardWriteDto,
-                        BindingResult bindingResult, HttpServletRequest request) {
+    public String write(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
+                        @Validated @ModelAttribute("boardDto")BoardWriteDto boardWriteDto,
+                        BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "boards/writeForm";
         }
 
-        User user = (User) request.getSession().getAttribute(SessionConst.LOGIN_MEMBER);
         boardService.write(boardWriteDto, user);
 
         return "redirect:/";
