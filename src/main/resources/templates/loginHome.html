@@ -36,9 +36,16 @@
     <hr style="height:5px;border:none;">
 </div>
 <div class="container">
-    <div class="row">
-        글목록
-    </div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>제목</th>
+        </tr>
+        <tr th:each="board : ${boards}">
+            <td th:text="${board.user.loginId}">ID</td>
+            <td th:text="${board.title}">제목</td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
