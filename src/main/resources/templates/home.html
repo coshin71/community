@@ -9,7 +9,7 @@
             max-width: 1200px;
         }
         table {
-            width: 80%;
+            width: 100%;
             border: 1px solid #444444;
             border-collapse: collapse;
         }
@@ -52,5 +52,12 @@
         </tr>
     </table>
 </div>
+<br>
+<ul class="pagination justify-content-center">
+    <li class="page-item disabled"><a class="page-link" th:if="${boards.first}" th:href="@{/(page=${boards.number-1})}">이전</a></li>
+    <li class="page-item"><a class="page-link" th:unless="${boards.first}" th:href="@{/(page=${boards.number-1})}">이전</a></li>
+    <li class="page-item disabled"><a class="page-link" th:if="${boards.last}" th:href="@{/(page=${boards.number+1})}">다음</a></li>
+    <li class="page-item"><a class="page-link" th:unless="${boards.last}" th:href="@{/(page=${boards.number+1})}">다음</a></li>
+</ul>
 </body>
 </html>
