@@ -48,7 +48,7 @@
         </tr>
         <tr th:each="board : ${boards}">
             <td th:text="${board.user.loginId}">ID</td>
-            <td th:text="${board.title}">제목</td>
+            <td><a th:href="@{/boards/{boardId}(boardId=${board.id})}" th:text="${board.title}">제목</a></td>
         </tr>
     </table>
 </div>

@@ -1,7 +1,9 @@
 package hello.community.controller;
 
+import hello.community.domain.Board.Board;
 import hello.community.domain.User.User;
 import hello.community.dto.BoardWriteDto;
+import hello.community.repository.BoardRepository;
 import hello.community.service.BoardService;
 import hello.community.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class BoardController {
 
     private final BoardService boardService;
+    private final BoardRepository boardRepository;
 
     @GetMapping("/")
     public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user,
@@ -51,4 +54,16 @@ public class BoardController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/boards/{boardId}")
+    public String view(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
+                       @PathVariable Long boardId, Model model) {
+        Board board = boardRepository.findById(boardId).orElse(null);
+        model.addAttribute("board", board);
+        model.addAttribute("user", user);
+
+        return "boards/viewForm";
+    }
 }
+
+
