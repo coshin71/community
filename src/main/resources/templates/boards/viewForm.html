@@ -37,15 +37,15 @@
     <div class="row">
         <div class="col">
             <button style="color: #fff; background:deepskyblue; font-size:2em; border-radius:0.5em; padding:5px 20px;"
-                    th:onclick="|location.href='@{/boards/update}'|" type="button">
+                    th:onclick="|location.href='@{/boards/{boardId}/update(boardId=${board.id})}'|" type="button" th:if="${user.id} == ${board.user.id}">
                 수정하기
             </button>
             <button style="color: #fff; background:deepskyblue; font-size:2em; border-radius:0.5em; padding:5px 20px;"
-                    th:onclick="|location.href='@{/boards/delete}'|" type="button">
+                    th:onclick="|location.href='@{/boards/{boardId}/delete(boardId=${board.id})}'|" type="button" th:if="${user.id} == ${board.user.id}">
                 삭제하기
             </button>
             <button style="color: #fff; background:deepskyblue; font-size:2em; border-radius:0.5em; padding:5px 20px;"
-                    th:onclick="|location.href='@{/}'|" type="button">
+                onclick="javascript:window.history.back();" type="button">
                 뒤로가기
             </button>
         </div>

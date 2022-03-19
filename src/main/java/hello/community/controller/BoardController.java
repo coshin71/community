@@ -58,11 +58,18 @@ public class BoardController {
     @GetMapping("/boards/{boardId}")
     public String view(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
                        @PathVariable Long boardId, Model model) {
-        Board board = boardRepository.findById(boardId).orElse(null);
+        Board board = boardService.view(boardId);
         model.addAttribute("board", board);
         model.addAttribute("user", user);
 
         return "boards/viewForm";
+    }
+
+    @GetMapping("/boards/{boardId}/delete")
+    public String delete(@PathVariable Long boardId) {
+        boardService.delete(boardId);
+
+        return "redirect:/";
     }
 }
 

@@ -23,8 +23,21 @@ public class BoardService {
         boardRepository.save(new Board(boardWriteDto.getTitle(), boardWriteDto.getContent(), user));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Board> list(Pageable pageable) {
         return boardRepository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Board view(Long boardId) {
+        return boardRepository.findById(boardId)
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("존재하지 않는 글입니다.");
+                });
+    }
+
+    @Transactional
+    public void delete(Long boardId) {
+        boardRepository.deleteById(boardId);
     }
 }
