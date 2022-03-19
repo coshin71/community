@@ -12,6 +12,8 @@
             width: 100%;
             border: 1px solid #444444;
             border-collapse: collapse;
+            table-layout: fixed;
+            word-break: break-all;
         }
         th, td {
             border: 1px solid #444444;
@@ -47,7 +49,7 @@
 <div class="container">
     <table>
         <tr>
-            <th>ID</th>
+            <th  width="25%">글쓴이</th>
             <th>제목</th>
         </tr>
         <tr th:each="board : ${boards}">
