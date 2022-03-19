@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final BoardQueryRepository boardQueryRepository;
-
     @Transactional
     public void writeBoard(BoardWriteDto boardWriteDto, User user) {
         boardRepository.save(new Board(boardWriteDto.getTitle(), boardWriteDto.getContent(), user));
