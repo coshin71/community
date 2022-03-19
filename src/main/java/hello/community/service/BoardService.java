@@ -4,15 +4,12 @@ import hello.community.domain.Board.Board;
 import hello.community.domain.User.User;
 import hello.community.dto.BoardUpdateDto;
 import hello.community.dto.BoardWriteDto;
-import hello.community.repository.BoardQueryRepository;
 import hello.community.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,15 +23,15 @@ public class BoardService {
         boardRepository.save(new Board(boardWriteDto.getTitle(), boardWriteDto.getContent(), user));
     }
 
+//    @Transactional(readOnly = true)
+//    public Page<Board> listBoard(Pageable pageable) {
+//        return boardRepository.findAll(pageable);
+//    }
+
     @Transactional(readOnly = true)
     public Page<Board> listBoard(Pageable pageable) {
-        return boardRepository.findAll(pageable);
+        return boardRepository.findAllWithUser(pageable);
     }
-
-//    @Transactional(readOnly = true)
-//    public List<Board> listBoard(int offset, int limit) {
-//        return boardQueryRepository.findAllWithUser(offset, limit);
-//    }
 
     @Transactional(readOnly = true)
     public Board findBoardById(Long boardId) {
