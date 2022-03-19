@@ -26,15 +26,15 @@ public class BoardService {
         boardRepository.save(new Board(boardWriteDto.getTitle(), boardWriteDto.getContent(), user));
     }
 
-//    @Transactional(readOnly = true)
-//    public Page<Board> listBoard(Pageable pageable) {
-//        return boardRepository.findAll(pageable);
-//    }
-
     @Transactional(readOnly = true)
-    public List<Board> listBoard(int offset, int limit) {
-        return boardQueryRepository.findAllWithUser(offset, limit);
+    public Page<Board> listBoard(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
+
+//    @Transactional(readOnly = true)
+//    public List<Board> listBoard(int offset, int limit) {
+//        return boardQueryRepository.findAllWithUser(offset, limit);
+//    }
 
     @Transactional(readOnly = true)
     public Board findBoardById(Long boardId) {

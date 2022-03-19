@@ -23,22 +23,10 @@ public class BoardController {
 
     private final BoardService boardService;
 
-//    @GetMapping("/")
-//    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user,
-//                       @PageableDefault(size = 5, sort="id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-//        model.addAttribute("boards", boardService.listBoard(pageable));
-//
-//        if (user == null) {
-//            return "home";
-//        }
-//
-//        model.addAttribute("user", user);
-//        return "loginHome";
-//    }
-
     @GetMapping("/")
-    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user, Model model) {
-        model.addAttribute("boards", boardService.listBoard(0, 5));
+    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user,
+                       @PageableDefault(size = 5, sort="id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        model.addAttribute("boards", boardService.listBoard(pageable));
 
         if (user == null) {
             return "home";
@@ -47,6 +35,18 @@ public class BoardController {
         model.addAttribute("user", user);
         return "loginHome";
     }
+
+//    @GetMapping("/")
+//    public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user, Model model) {
+//        model.addAttribute("boards", boardService.listBoard(0, 5));
+//
+//        if (user == null) {
+//            return "home";
+//        }
+//
+//        model.addAttribute("user", user);
+//        return "loginHome";
+//    }
 
     @GetMapping("/boards/write")
     public String writeForm(@ModelAttribute("boardDto") BoardWriteDto boardWriteDto) {
