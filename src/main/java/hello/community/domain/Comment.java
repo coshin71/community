@@ -22,4 +22,13 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    public Comment() {
+    }
+
+    public Comment(String content, Board board, User user) {
+        this.content = content;
+        this.board = board;
+        this.user = user;
+    }
 }

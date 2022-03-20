@@ -4,7 +4,9 @@ import hello.community.domain.Board;
 import hello.community.domain.User;
 import hello.community.dto.BoardUpdateDto;
 import hello.community.dto.BoardWriteDto;
+import hello.community.dto.CommentWriteDto;
 import hello.community.service.BoardService;
+import hello.community.service.CommentService;
 import hello.community.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -16,12 +18,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/")
     public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user,
@@ -58,8 +63,12 @@ public class BoardController {
     public String view(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
                        @PathVariable Long boardId, Model model) {
         Board board = boardService.findBoardById(boardId);
+        CommentWriteDto commentWriteDto = new CommentWriteDto();
+
         model.addAttribute("board", board);
         model.addAttribute("user", user);
+        model.addAttribute("commentDto", commentWriteDto);
+
 
         return "boards/viewForm";
     }
@@ -91,6 +100,31 @@ public class BoardController {
         boardService.updateBoard(boardId, boardUpdateDto);
 
         return "redirect:/";
+    }
+
+    @PostMapping("/boards/{boardId}/comments/write")
+    public String writeComment(@PathVariable Long boardId,
+                               @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
+                               @Validated @ModelAttribute("commentDto") CommentWriteDto commentWriteDto,
+                               BindingResult bindingResult, HttpServletRequest request) {
+//        if (bindingResult.hasErrors()) {
+//            return "";
+//        }
+        commentService.writeComment(boardId, user, commentWriteDto);
+
+        String referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
+    }
+
+    @GetMapping("/boards/{boardId}/comments/{commentId}/delete")
+    public String deleteComment(@PathVariable Long boardId, @PathVariable Long commentId,
+                                HttpServletRequest request) {
+        commentService.deleteComment(commentId);
+
+        String referer = request.getHeader("Referer");
+
+        return "redirect:" + referer;
     }
 }
 

@@ -71,22 +71,14 @@
     <div class="card">
         <div class="card-header">댓글 목록</div>
         <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between">
-                <div>댓글 내용</div>
+            <li class="list-group-item d-flex justify-content-between" th:each="comment : ${board.comments}">
+                <div th:text="${comment.content}">댓글 내용</div>
                 <div class="d-flex">
-                    <div>작성자</div>
+                    <div th:text="|작성자 : ${comment.user.loginId}|">작성자</div>
                     &nbsp;
-                    <button style="color: #fff; background:deepskyblue; font-size:0.7em; border-radius:0.5em;" type="submit">삭제</button>
-                </div>
-            </li>
-        </ul>
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between">
-                <div>댓글 내용</div>
-                <div class="d-flex">
-                    <div>작성자</div>
-                    &nbsp;
-                    <button style="color: #fff; background:deepskyblue; font-size:0.7em; border-radius:0.5em;" type="submit">삭제</button>
+                    <button th:if="${comment.user.id} == ${user.id}"
+                            th:onclick="|location.href='@{/boards/{boardId}/comments/{commentId}/delete(boardId=${board.id}, commentId=${comment.id})}'|"
+                            style="color: #fff; background:deepskyblue; font-size:0.7em; border-radius:0.5em;" type="button"> 삭제 </button>
                 </div>
             </li>
         </ul>
@@ -96,10 +88,12 @@
 <div class="container">
     <div class="card">
         <label class="card-body" for="comment">댓글 쓰기</label>
-        <div class="card-body"><textarea class="form-control" rows="2" id="comment"></textarea></div>
-        <div class="card-footer">
-            <button style="color: #fff; background:deepskyblue; font-size:1em; border-radius:0.5em;" type="submit">등록</button>
-        </div>
+        <form th:action="@{/boards/{boardId}/comments/write(boardId=${board.id})}" th:object="${commentDto}" method="post">
+            <div class="card-body"><textarea class="form-control" rows="2" id="comment" th:field="*{content}"></textarea></div>
+            <div class="card-footer">
+                <button style="color: #fff; background:deepskyblue; font-size:1em; border-radius:0.5em;" type="submit">등록</button>
+            </div>
+        </form>
     </div>
 </div>
 </body>
