@@ -1,6 +1,6 @@
 package hello.community.controller;
 
-import hello.community.domain.User.User;
+import hello.community.domain.User;
 import hello.community.dto.UserLoginDto;
 import hello.community.service.LoginService;
 import hello.community.session.SessionConst;

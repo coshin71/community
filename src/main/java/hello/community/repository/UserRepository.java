@@ -1,6 +1,6 @@
 package hello.community.repository;
 
-import hello.community.domain.User.User;
+import hello.community.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

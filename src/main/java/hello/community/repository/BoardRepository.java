@@ -1,6 +1,6 @@
 package hello.community.repository;
 
-import hello.community.domain.Board.Board;
+import hello.community.domain.Board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

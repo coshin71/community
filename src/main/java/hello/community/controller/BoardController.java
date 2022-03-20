@@ -1,7 +1,7 @@
 package hello.community.controller;
 
-import hello.community.domain.Board.Board;
-import hello.community.domain.User.User;
+import hello.community.domain.Board;
+import hello.community.domain.User;
 import hello.community.dto.BoardUpdateDto;
 import hello.community.dto.BoardWriteDto;
 import hello.community.service.BoardService;

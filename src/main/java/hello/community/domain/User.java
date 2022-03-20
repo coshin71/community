@@ -1,4 +1,4 @@
-package hello.community.domain.User;
+package hello.community.domain;
 
 import lombok.Data;
 

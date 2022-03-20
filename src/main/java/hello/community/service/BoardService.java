@@ -1,7 +1,7 @@
 package hello.community.service;
 
-import hello.community.domain.Board.Board;
-import hello.community.domain.User.User;
+import hello.community.domain.Board;
+import hello.community.domain.User;
 import hello.community.dto.BoardUpdateDto;
 import hello.community.dto.BoardWriteDto;
 import hello.community.repository.BoardRepository;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+
     @Transactional
     public void writeBoard(BoardWriteDto boardWriteDto, User user) {
         boardRepository.save(new Board(boardWriteDto.getTitle(), boardWriteDto.getContent(), user));
