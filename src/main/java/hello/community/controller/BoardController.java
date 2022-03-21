@@ -30,7 +30,7 @@ public class BoardController {
 
     @GetMapping("/")
     public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user,
-                       @PageableDefault(size = 5, sort="id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+                       @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         model.addAttribute("boards", boardService.listBoard(pageable));
 
         if (user == null) {

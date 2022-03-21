@@ -24,9 +24,6 @@ public class UserService {
     @Transactional
     public Boolean isDuplicatedLoginId(String loginId) {
         User user = userRepository.findByLoginId(loginId).orElse(new User());
-        if (user.getLoginId() != null) {
-            return true;
-        }
-        return false;
+        return user.getLoginId() != null;
     }
 }

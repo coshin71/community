@@ -5,7 +5,8 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CommentWriteDto {
 
     @NotNull(message = "내용 입력은 필수입니다.")
