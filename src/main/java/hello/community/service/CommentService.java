@@ -10,12 +10,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
 
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
+
+    @Transactional(readOnly = true)
+    public List<Comment> listComments(Board board) {
+        return commentRepository.findAllWithUser(board);
+    }
 
     @Transactional
     public void writeComment(Long boardId, User user, CommentWriteDto commentWriteDto) {

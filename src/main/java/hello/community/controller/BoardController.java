@@ -31,7 +31,7 @@ public class BoardController {
     @GetMapping("/")
     public String home(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) User user,
                        @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-        model.addAttribute("boards", boardService.listBoard(pageable));
+        model.addAttribute("boards", boardService.listBoards(pageable));
 
         if (user == null) {
             return "home";
@@ -63,12 +63,13 @@ public class BoardController {
     public String view(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
                        @PathVariable Long boardId, Model model) {
         Board board = boardService.findBoardById(boardId);
+        board.setComments(commentService.listComments(board));
+
         CommentWriteDto commentWriteDto = new CommentWriteDto();
 
         model.addAttribute("board", board);
         model.addAttribute("user", user);
         model.addAttribute("commentDto", commentWriteDto);
-
 
         return "boards/viewForm";
     }

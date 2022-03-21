@@ -28,9 +28,10 @@ public class BoardService {
 //    }
 
     @Transactional(readOnly = true)
-    public Page<Board> listBoard(Pageable pageable) {
+    public Page<Board> listBoards(Pageable pageable) {
         return boardRepository.findAllWithUser(pageable);
     }
+
 
     @Transactional(readOnly = true)
     public Board findBoardById(Long boardId) {

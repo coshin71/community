@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css"
+          rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <style>
         .container {
             max-width: 1200px;
         }
+
         table {
             width: 100%;
             border: 1px solid #444444;
@@ -15,6 +16,7 @@
             table-layout: fixed;
             word-break: break-all;
         }
+
         th, td {
             border: 1px solid #444444;
             padding: 10px;
@@ -24,8 +26,8 @@
 <body>
 <br>
 <div class="container">
-    <h4 style="float: left" class="mb-3" th:text="|${user.loginId}님 반갑습니다!|">로그인 사용자 이름</h4>
-    <form th:action="@{/logout}" method="post">
+    <h4 class="mb-3" style="float: left" th:text="|${user.loginId}님 반갑습니다!|">로그인 사용자 이름</h4>
+    <form method="post" th:action="@{/logout}">
         <button style="color: #fff; background:deepskyblue; float: left; font-size:1em; border-radius:0.5em; padding:2px 4px;"
                 type="submit">
             로그아웃
@@ -49,7 +51,7 @@
 <div class="container">
     <table>
         <tr>
-            <th  width="25%">글쓴이</th>
+            <th width="25%">글쓴이</th>
             <th>제목</th>
         </tr>
         <tr th:each="board : ${boards}">
@@ -60,10 +62,14 @@
 </div>
 <br>
 <ul class="pagination justify-content-center">
-    <li class="page-item disabled"><a class="page-link" th:if="${boards.first}" th:href="@{/(page=${boards.number-1})}">이전</a></li>
-    <li class="page-item"><a class="page-link" th:unless="${boards.first}" th:href="@{/(page=${boards.number-1})}">이전</a></li>
-    <li class="page-item disabled"><a class="page-link" th:if="${boards.last}" th:href="@{/(page=${boards.number+1})}">다음</a></li>
-    <li class="page-item"><a class="page-link" th:unless="${boards.last}" th:href="@{/(page=${boards.number+1})}">다음</a></li>
+    <li class="page-item disabled"><a class="page-link" th:href="@{/(page=${boards.number-1})}" th:if="${boards.first}">이전</a>
+    </li>
+    <li class="page-item"><a class="page-link" th:href="@{/(page=${boards.number-1})}"
+                             th:unless="${boards.first}">이전</a></li>
+    <li class="page-item disabled"><a class="page-link" th:href="@{/(page=${boards.number+1})}" th:if="${boards.last}">다음</a>
+    </li>
+    <li class="page-item"><a class="page-link" th:href="@{/(page=${boards.number+1})}" th:unless="${boards.last}">다음</a>
+    </li>
 </ul>
 </body>
 </html>
