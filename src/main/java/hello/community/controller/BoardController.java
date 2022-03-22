@@ -62,7 +62,7 @@ public class BoardController {
     @GetMapping("/boards/{boardId}")
     public String view(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
                        @PathVariable Long boardId, Model model) {
-        Board board = boardService.findBoardById(boardId);
+        Board board = boardService.findBoardWithUserById(boardId);
         board.setComments(commentService.listComments(board));
 
         CommentWriteDto commentWriteDto = new CommentWriteDto();

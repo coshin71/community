@@ -4,6 +4,7 @@ import hello.community.domain.Board;
 import hello.community.domain.User;
 import hello.community.dto.BoardUpdateDto;
 import hello.community.dto.BoardWriteDto;
+import hello.community.repository.BoardDetailRepository;
 import hello.community.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardDetailRepository boardDetailRepository;
 
     @Transactional
     public void writeBoard(BoardWriteDto boardWriteDto, User user) {
@@ -32,6 +34,13 @@ public class BoardService {
         return boardRepository.findAllWithUser(pageable);
     }
 
+    @Transactional(readOnly = true)
+    public Board findBoardWithUserById(Long boardId) {
+        return boardDetailRepository.findWithUserById(boardId)
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("존재하지 않는 글입니다.");
+                });
+    }
 
     @Transactional(readOnly = true)
     public Board findBoardById(Long boardId) {
