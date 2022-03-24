@@ -95,7 +95,7 @@
     <div class="card">
         <label class="card-body" for="comment">댓글 쓰기</label>
         <form method="post" th:action="@{/boards/{boardId}/comments/write(boardId=${board.id})}"
-              th:object="${commentDto}">
+              th:object="${writeRequestCommentDto}">
             <div class="card-body"><textarea class="form-control" id="comment" rows="2"
                                              th:field="*{content}"></textarea></div>
             <div class="card-footer">

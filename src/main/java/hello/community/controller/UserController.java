@@ -1,6 +1,6 @@
 package hello.community.controller;
 
-import hello.community.dto.UserSignupDto;
+import hello.community.dto.SignupRequestUserDto;
 import hello.community.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,22 +19,23 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/signup")
-    public String signupForm(@ModelAttribute("signupDto") UserSignupDto userSignupDto) {
+    public String signupForm(@ModelAttribute("signupRequestUserDto") SignupRequestUserDto signupRequestUserDto) {
         return "users/signupForm";
     }
 
     @PostMapping("/signup")
-    public String signup(@Validated @ModelAttribute("signupDto") UserSignupDto userSignupDto, BindingResult bindingResult) {
+    public String signup(@Validated @ModelAttribute("signupRequestUserDto") SignupRequestUserDto signupRequestUserDto,
+                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "users/signupForm";
         }
 
-        if (userService.isDuplicatedLoginId(userSignupDto.getLoginId())) {
+        if (userService.isDuplicatedLoginId(signupRequestUserDto.getLoginId())) {
             bindingResult.reject("loginIdDuplicate", "아이디가 중복입니다.");
             return "users/signupForm";
         }
 
-        userService.signup(userSignupDto);
+        userService.signup(signupRequestUserDto);
         return "redirect:/";
     }
 }

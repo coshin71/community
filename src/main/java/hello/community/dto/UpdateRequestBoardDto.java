@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @AllArgsConstructor
-public class BoardUpdateDto {
+public class UpdateRequestBoardDto {
 
     @NotBlank(message = "제목 입력은 필수입니다.")
     @Size(max = 25, message = "제목은 최대 25자입니다.")

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class UserSignupDto {
+public class SignupRequestUserDto {
 
     @NotBlank(message = "아이디 입력은 필수입니다.")
     @Size(max = 15, message = "아이디는 최대 15자입니다.")

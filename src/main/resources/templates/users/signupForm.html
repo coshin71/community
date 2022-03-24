@@ -21,7 +21,7 @@
         <h2>회원 가입</h2>
     </div>
     <h4 class="mb-3">회원 정보 입력</h4>
-    <form action="" method="post" th:action th:object="${signupDto}">
+    <form action="" method="post" th:action th:object="${signupRequestUserDto}">
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}"
                th:text="${err}">전체 오류 메시지</p>

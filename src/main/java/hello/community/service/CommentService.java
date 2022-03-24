@@ -3,7 +3,7 @@ package hello.community.service;
 import hello.community.domain.Board;
 import hello.community.domain.Comment;
 import hello.community.domain.User;
-import hello.community.dto.CommentWriteDto;
+import hello.community.dto.WriteRequestCommentDto;
 import hello.community.repository.BoardRepository;
 import hello.community.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +25,12 @@ public class CommentService {
     }
 
     @Transactional
-    public void writeComment(Long boardId, User user, CommentWriteDto commentWriteDto) {
+    public void writeComment(Long boardId, User user, WriteRequestCommentDto writeRequestCommentDto) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> {
                     return new IllegalArgumentException("존재하지 않는 글입니다.");
                 });
-        commentRepository.save(new Comment(commentWriteDto.getContent(), board, user));
+        commentRepository.save(new Comment(writeRequestCommentDto.getContent(), board, user));
     }
 
     @Transactional

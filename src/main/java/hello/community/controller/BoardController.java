@@ -2,9 +2,9 @@ package hello.community.controller;
 
 import hello.community.domain.Board;
 import hello.community.domain.User;
-import hello.community.dto.BoardUpdateDto;
-import hello.community.dto.BoardWriteDto;
-import hello.community.dto.CommentWriteDto;
+import hello.community.dto.UpdateRequestBoardDto;
+import hello.community.dto.WriteRequestBoardDto;
+import hello.community.dto.WriteRequestCommentDto;
 import hello.community.service.BoardService;
 import hello.community.service.CommentService;
 import hello.community.session.SessionConst;
@@ -42,19 +42,19 @@ public class BoardController {
     }
 
     @GetMapping("/boards/write")
-    public String writeForm(@ModelAttribute("boardDto") BoardWriteDto boardWriteDto) {
+    public String writeForm(@ModelAttribute("writeRequestBoardDto") WriteRequestBoardDto writeRequestBoardDto) {
         return "boards/writeForm";
     }
 
     @PostMapping("/boards/write")
     public String write(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
-                        @Validated @ModelAttribute("boardDto") BoardWriteDto boardWriteDto,
+                        @Validated @ModelAttribute("writeRequestBoardDto") WriteRequestBoardDto writeRequestBoardDto,
                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "boards/writeForm";
         }
 
-        boardService.writeBoard(boardWriteDto, user);
+        boardService.writeBoard(writeRequestBoardDto, user);
 
         return "redirect:/";
     }
@@ -65,11 +65,11 @@ public class BoardController {
         Board board = boardService.findBoardWithUserById(boardId);
         board.setComments(commentService.listComments(board));
 
-        CommentWriteDto commentWriteDto = new CommentWriteDto();
+        WriteRequestCommentDto writeRequestCommentDto = new WriteRequestCommentDto();
 
         model.addAttribute("board", board);
         model.addAttribute("user", user);
-        model.addAttribute("commentDto", commentWriteDto);
+        model.addAttribute("writeRequestCommentDto", writeRequestCommentDto);
 
         return "boards/viewForm";
     }
@@ -84,21 +84,21 @@ public class BoardController {
     @GetMapping("/boards/{boardId}/update")
     public String updateForm(@PathVariable Long boardId, Model model) {
         Board board = boardService.findBoardById(boardId);
-        BoardUpdateDto boardUpdateDto = new BoardUpdateDto(board.getTitle(), board.getContent());
-        model.addAttribute("boardDto", boardUpdateDto);
+        UpdateRequestBoardDto updateRequestBoardDto = new UpdateRequestBoardDto(board.getTitle(), board.getContent());
+        model.addAttribute("updateRequestBoardDto", updateRequestBoardDto);
 
         return "boards/updateForm";
     }
 
     @PostMapping("/boards/{boardId}/update")
     public String update(@PathVariable Long boardId,
-                         @Validated @ModelAttribute("boardDto") BoardUpdateDto boardUpdateDto,
+                         @Validated @ModelAttribute("updateRequestBoardDto") UpdateRequestBoardDto updateRequestBoardDto,
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "boards/updateForm";
         }
 
-        boardService.updateBoard(boardId, boardUpdateDto);
+        boardService.updateBoard(boardId, updateRequestBoardDto);
 
         return "redirect:/";
     }
@@ -106,12 +106,10 @@ public class BoardController {
     @PostMapping("/boards/{boardId}/comments/write")
     public String writeComment(@PathVariable Long boardId,
                                @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
-                               @Validated @ModelAttribute("commentDto") CommentWriteDto commentWriteDto,
-                               BindingResult bindingResult, HttpServletRequest request) {
-//        if (bindingResult.hasErrors()) {
-//            return "";
-//        }
-        commentService.writeComment(boardId, user, commentWriteDto);
+                               @Validated @ModelAttribute("commentDto") WriteRequestCommentDto writeRequestCommentDto,
+                               HttpServletRequest request) {
+
+        commentService.writeComment(boardId, user, writeRequestCommentDto);
 
         String referer = request.getHeader("Referer");
 

@@ -20,7 +20,7 @@
     <div class="py-5 text-center">
         <h2>수정하기</h2>
     </div>
-    <form action="" method="post" th:action th:object="${boardDto}">
+    <form action="" method="post" th:action th:object="${updateRequestBoardDto}">
         <div>
             <label for="loginId">제목</label>
             <input class="form-control" id="loginId" th:errorclass="field-error" th:field="*{title}"

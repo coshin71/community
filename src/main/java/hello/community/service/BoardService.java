@@ -2,8 +2,8 @@ package hello.community.service;
 
 import hello.community.domain.Board;
 import hello.community.domain.User;
-import hello.community.dto.BoardUpdateDto;
-import hello.community.dto.BoardWriteDto;
+import hello.community.dto.UpdateRequestBoardDto;
+import hello.community.dto.WriteRequestBoardDto;
 import hello.community.repository.BoardDetailRepository;
 import hello.community.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +20,9 @@ public class BoardService {
     private final BoardDetailRepository boardDetailRepository;
 
     @Transactional
-    public void writeBoard(BoardWriteDto boardWriteDto, User user) {
-        boardRepository.save(new Board(boardWriteDto.getTitle(), boardWriteDto.getContent(), user));
+    public void writeBoard(WriteRequestBoardDto writeRequestBoardDto, User user) {
+        boardRepository.save(new Board(writeRequestBoardDto.getTitle(), writeRequestBoardDto.getContent(), user));
     }
-
-//    @Transactional(readOnly = true)
-//    public Page<Board> listBoard(Pageable pageable) {
-//        return boardRepository.findAll(pageable);
-//    }
 
     @Transactional(readOnly = true)
     public Page<Board> listBoards(Pageable pageable) {
@@ -56,12 +51,12 @@ public class BoardService {
     }
 
     @Transactional
-    public void updateBoard(Long boardId, BoardUpdateDto boardUpdateDto) {
+    public void updateBoard(Long boardId, UpdateRequestBoardDto updateRequestBoardDto) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> {
                     return new IllegalArgumentException("존재하지 않는 글입니다.");
                 });
-        board.setTitle(boardUpdateDto.getTitle());
-        board.setContent(boardUpdateDto.getContent());
+        board.setTitle(updateRequestBoardDto.getTitle());
+        board.setContent(updateRequestBoardDto.getContent());
     }
 }
