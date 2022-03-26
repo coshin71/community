@@ -66,7 +66,7 @@ public class BoardController {
     public String view(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = true) User user,
                        @PathVariable Long boardId, Model model) {
         Board board = boardService.findBoardWithUserById(boardId);
-        board.setComments(commentService.listComments(board));
+        board.changeComments(commentService.listComments(board));
 
         WriteRequestCommentDto writeRequestCommentDto = new WriteRequestCommentDto();
 

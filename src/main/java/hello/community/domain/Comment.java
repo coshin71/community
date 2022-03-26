@@ -1,10 +1,10 @@
 package hello.community.domain;
 
-import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
 @Entity
 public class Comment {
 

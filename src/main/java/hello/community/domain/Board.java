@@ -1,12 +1,12 @@
 package hello.community.domain;
 
-import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
 @Entity
 public class Board {
 
@@ -29,6 +29,10 @@ public class Board {
     public void titleAndContentUpdate(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void changeComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public Board() {
