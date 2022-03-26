@@ -3,6 +3,7 @@ package hello.community.controller;
 import hello.community.domain.Board;
 import hello.community.domain.User;
 import hello.community.dto.UpdateRequestBoardDto;
+import hello.community.dto.LoginInfoUserDto;
 import hello.community.dto.WriteRequestBoardDto;
 import hello.community.dto.WriteRequestCommentDto;
 import hello.community.service.BoardService;
@@ -37,7 +38,9 @@ public class BoardController {
             return "home";
         }
 
-        model.addAttribute("user", user);
+        LoginInfoUserDto loginInfoUserDto = new LoginInfoUserDto(user);
+        model.addAttribute("loginInfoUserDto", loginInfoUserDto);
+
         return "loginHome";
     }
 
@@ -67,8 +70,9 @@ public class BoardController {
 
         WriteRequestCommentDto writeRequestCommentDto = new WriteRequestCommentDto();
 
+        LoginInfoUserDto loginInfoUserDto = new LoginInfoUserDto(user);
+        model.addAttribute("loginInfoUserDto", loginInfoUserDto);
         model.addAttribute("board", board);
-        model.addAttribute("user", user);
         model.addAttribute("writeRequestCommentDto", writeRequestCommentDto);
 
         return "boards/viewForm";

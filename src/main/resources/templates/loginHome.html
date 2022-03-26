@@ -26,7 +26,7 @@
 <body>
 <br>
 <div class="container">
-    <h4 class="mb-3" style="float: left" th:text="|${user.loginId}님 반갑습니다!|">로그인 사용자 이름</h4>
+    <h4 class="mb-3" style="float: left" th:text="|${loginInfoUserDto.loginId}님 반갑습니다!|">로그인 사용자 이름</h4>
     <form method="post" th:action="@{/logout}">
         <button style="color: #fff; background:deepskyblue; float: left; font-size:1em; border-radius:0.5em; padding:2px 4px;"
                 type="submit">

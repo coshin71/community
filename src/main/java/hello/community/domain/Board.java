@@ -26,6 +26,11 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<Comment>();
 
+    public void titleAndContentUpdate(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public Board() {
     }
 

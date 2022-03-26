@@ -36,7 +36,6 @@ public class LoginController {
         }
 
         User loginUser = loginService.login(loginRequestUserDto.getLoginId(), loginRequestUserDto.getPassword());
-
         if (loginUser == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 올바르지 않습니다.");
             return "login/loginForm";
@@ -56,6 +55,4 @@ public class LoginController {
         }
         return "redirect:/";
     }
-
-
 }
